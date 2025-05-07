@@ -14,6 +14,7 @@ from Laurelin import logMessage, config_manager, PIN_EMOTE, ACTUAL_PIN_EMOTE_LMA
 ### REACT_THRESHOLD is the threshold for any reactions. 
 ### USER_STAR_REACT_THRESHOLD is the threshold for non-moderators using the highlight reaction (PIN_EMOTE / ⭐) to provide a community force-pin option.
 ### Moderators (or specified roles) will force-pin with this same reaction.
+### HighlightUtils / create_embed_from_ids contains the code to build the embed messages that are posted. 
 
 ## on_reaction_add and on_raw_reaction_add (cached/uncached respectively) process each reaction as they come in.
 ## They trigger highlight_message_in_channel when the threshold is met and no excluding conditions are present.
@@ -295,11 +296,6 @@ class Highlights(commands.Cog):
             await message.remove_reaction('❌', user)
         finally:
             await confirmation_message.delete()
-    
-    # Sends attachments as a separate message. This is used to post the contents of a message with multiple attachments.
-    async def send_attachments(self, channel, attachments):
-        for attachment in attachments:
-            await channel.send(file=await attachment.to_file())
 
 # discord.py setup, not needed if yoinking
 async def setup(bot):
